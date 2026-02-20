@@ -1,0 +1,31 @@
+
+services:
+  api:
+    build: .
+    container_name: gymvision-api
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=3000
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_NAME=gymvision
+      - DB_USER=gymvision
+      - DB_PASSWORD=gymvision
+    depends_on:
+      - db
+
+  db:
+    image: postgres:16-alpine
+    container_name: gymvision-db
+    environment:
+      POSTGRES_DB: gymvision
+      POSTGRES_USER: gymvision
+      POSTGRES_PASSWORD: gymvision
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
